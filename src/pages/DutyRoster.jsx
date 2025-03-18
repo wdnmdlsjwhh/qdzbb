@@ -1,13 +1,27 @@
+/**
+ * 值班表管理组件
+ * 实现值班记录的增删改查功能
+ * 使用表格形式展示值班安排
+ */
+
+// 导入必要的React钩子和组件
 import { useState } from 'react';
 import { Table, Button, Modal, Form, DatePicker, Select, Input, message, Tag, Space } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+// 导入日期处理库
 import dayjs from 'dayjs';
 
+// 从DatePicker组件中解构RangePicker组件，用于选择日期范围
 const { RangePicker } = DatePicker;
+// 从Select组件中解构Option组件
 const { Option } = Select;
 
+/**
+ * 值班表主组件
+ * 包含值班记录的展示、添加、编辑和删除功能
+ */
 const DutyRoster = () => {
-  // 模拟值班数据
+  // 模拟值班数据 - 在实际应用中，这些数据应该从API获取
   const [dutyRosters, setDutyRosters] = useState([
     {
       id: 1,
@@ -29,7 +43,7 @@ const DutyRoster = () => {
     }
   ]);
 
-  // 模拟用户数据
+  // 模拟用户数据 - 用于值班人员选择
   const users = [
     { id: 1, name: '张三', department: '技术部' },
     { id: 2, name: '李四', department: '运维部' },
@@ -37,11 +51,17 @@ const DutyRoster = () => {
     { id: 4, name: '赵六', department: '财务部' }
   ];
 
+  // 控制添加/编辑值班记录模态框的显示状态
   const [isModalVisible, setIsModalVisible] = useState(false);
+  // 当前正在编辑的值班记录ID，null表示新增记录
   const [editingId, setEditingId] = useState(null);
+  // 创建表单实例，用于表单操作
   const [form] = Form.useForm();
 
-  // 表格列定义
+  /**
+   * 表格列定义
+   * 配置值班表格的各列显示内容和操作按钮
+   */
   const columns = [
     {
       title: '值班人员',
@@ -67,6 +87,7 @@ const DutyRoster = () => {
       title: '值班类型',
       dataIndex: 'type',
       key: 'type',
+      // 自定义值班类型显示，使用不同颜色的标签区分
       render: (type) => (
         <Tag color={type === 'day' ? 'blue' : 'purple'}>
           {type === 'day' ? '日班' : '夜班'}
@@ -81,6 +102,7 @@ const DutyRoster = () => {
     {
       title: '操作',
       key: 'action',
+      // 自定义操作列，包含编辑和删除按钮
       render: (_, record) => (
         <Space size="middle">
           <Button 
@@ -102,14 +124,20 @@ const DutyRoster = () => {
     },
   ];
 
-  // 处理添加值班记录
+  /**
+   * 处理添加值班记录操作
+   * 重置表单并显示添加值班记录模态框
+   */
   const handleAdd = () => {
     setEditingId(null);
     form.resetFields();
     setIsModalVisible(true);
   };
 
-  // 处理编辑值班记录
+  /**
+   * 处理编辑值班记录操作
+   * @param {Object} record - 当前选中的值班记录
+   */
   const handleEdit = (record) => {
     setEditingId(record.id);
     form.setFieldsValue({
@@ -122,7 +150,11 @@ const DutyRoster = () => {
     setIsModalVisible(true);
   };
 
-  // 处理删除值班记录
+  /**
+   * 处理删除值班记录操作
+   * 弹出确认对话框，确认后删除值班记录
+   * @param {number} id - 要删除的值班记录ID
+   */
   const handleDelete = (id) => {
     Modal.confirm({
       title: '确认删除',
@@ -134,13 +166,17 @@ const DutyRoster = () => {
     });
   };
 
-  // 处理表单提交
+  /**
+   * 处理表单提交
+   * 根据editingId判断是添加新值班记录还是更新现有值班记录
+   */
   const handleSubmit = () => {
     form.validateFields().then(values => {
       const [startDate, endDate] = values.dateRange.map(date => date.format('YYYY-MM-DD'));
       
       if (editingId === null) {
-        // 添加新值班记录
+        // 添加新值班记录 - 使用当前时间戳作为临时ID
+        // 在实际应用中，ID应该由后端生成
         const newRoster = {
           id: Date.now(),
           user: values.user,
@@ -153,7 +189,7 @@ const DutyRoster = () => {
         setDutyRosters([...dutyRosters, newRoster]);
         message.success('值班记录添加成功');
       } else {
-        // 更新现有值班记录
+        // 更新现有值班记录 - 保留原记录ID，更新其他字段
         setDutyRosters(dutyRosters.map(roster => 
           roster.id === editingId ? { 
             ...roster, 
@@ -174,9 +210,14 @@ const DutyRoster = () => {
     });
   };
 
+  /**
+   * 组件渲染函数
+   * 包含页面标题、添加按钮、值班表格和添加/编辑值班记录模态框
+   */
   return (
     <div>
       <h2>值班表</h2>
+      {/* 添加值班记录按钮 */}
       <Button 
         type="primary" 
         icon={<PlusOutlined />} 
@@ -185,18 +226,20 @@ const DutyRoster = () => {
       >
         添加值班记录
       </Button>
+      {/* 值班数据表格 */}
       <Table 
         columns={columns} 
         dataSource={dutyRosters} 
-        rowKey="id"
-        pagination={{ pageSize: 10 }}
+        rowKey="id" // 指定每行的唯一键
+        pagination={{ pageSize: 10 }} // 分页配置
       />
 
+      {/* 添加/编辑值班记录模态框 */}
       <Modal
-        title={editingId === null ? '添加值班记录' : '编辑值班记录'}
+        title={editingId === null ? '添加值班记录' : '编辑值班记录'} // 根据操作类型显示不同标题
         open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        onOk={handleSubmit}
+        onCancel={() => setIsModalVisible(false)} // 关闭模态框
+        onOk={handleSubmit} // 提交表单
       >
         <Form form={form} layout="vertical">
           <Form.Item
@@ -256,4 +299,5 @@ const DutyRoster = () => {
   );
 };
 
+// 导出值班表组件
 export default DutyRoster;

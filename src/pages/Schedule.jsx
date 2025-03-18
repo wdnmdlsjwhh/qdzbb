@@ -1,12 +1,26 @@
+/**
+ * 日程管理组件
+ * 实现日程的查看、添加功能
+ * 使用日历形式展示日程安排
+ */
+
+// 导入必要的React钩子和组件
 import { useState } from 'react';
 import { Calendar, Badge, Modal, Form, Input, DatePicker, Select, Button, message } from 'antd';
+// 导入日期处理库
 import dayjs from 'dayjs';
 
+// 从Select组件中解构Option组件
 const { Option } = Select;
+// 从Input组件中解构TextArea组件
 const { TextArea } = Input;
 
+/**
+ * 日程表主组件
+ * 包含日程展示、添加功能
+ */
 const Schedule = () => {
-  // 模拟日程数据
+  // 模拟日程数据 - 在实际应用中，这些数据应该从API获取
   const [schedules, setSchedules] = useState([
     {
       id: 1,
@@ -26,18 +40,26 @@ const Schedule = () => {
     }
   ]);
 
+  // 控制添加日程模态框的显示状态
   const [isModalVisible, setIsModalVisible] = useState(false);
+  // 创建表单实例，用于表单操作
   const [form] = Form.useForm();
+  // 当前选中的日期
   const [selectedDate, setSelectedDate] = useState(null);
 
-  // 日程类型对应的徽章颜色
+  // 日程类型对应的徽章颜色映射
+  // 不同类型的日程使用不同颜色标识
   const typeColors = {
     personal: 'blue',
     team: 'green',
     important: 'red'
   };
 
-  // 在日历上显示日程
+  /**
+   * 在日历单元格中渲染日程项目
+   * @param {dayjs} value - 日历单元格的日期值
+   * @returns {ReactNode} 渲染的日程列表
+   */
   const dateCellRender = (value) => {
     const date = value.format('YYYY-MM-DD');
     const dateSchedules = schedules.filter(schedule => schedule.date === date);
@@ -58,7 +80,10 @@ const Schedule = () => {
     );
   };
 
-  // 显示日程详情
+  /**
+   * 显示日程详情模态框
+   * @param {Object} schedule - 日程对象
+   */
   const showScheduleDetails = (schedule) => {
     Modal.info({
       title: schedule.title,
@@ -73,7 +98,11 @@ const Schedule = () => {
     });
   };
 
-  // 获取类型标签
+  /**
+   * 获取日程类型的中文标签
+   * @param {string} type - 日程类型的英文标识
+   * @returns {string} 日程类型的中文标签
+   */
   const getTypeLabel = (type) => {
     const types = {
       personal: '个人',
@@ -83,7 +112,11 @@ const Schedule = () => {
     return types[type] || type;
   };
 
-  // 点击日期单元格
+  /**
+   * 处理日期单元格点击事件
+   * 点击日期后打开添加日程的模态框
+   * @param {dayjs} date - 点击的日期
+   */
   const onSelect = (date) => {
     setSelectedDate(date.format('YYYY-MM-DD'));
     form.setFieldsValue({
@@ -95,7 +128,10 @@ const Schedule = () => {
     setIsModalVisible(true);
   };
 
-  // 添加新日程
+  /**
+   * 处理添加日程操作
+   * 验证表单并创建新的日程记录
+   */
   const handleAddSchedule = () => {
     form.validateFields().then(values => {
       const newSchedule = {
@@ -114,20 +150,27 @@ const Schedule = () => {
     });
   };
 
+  /**
+   * 组件渲染函数
+   * 包含日历组件和添加日程的模态框
+   */
   return (
     <div>
       <h2>日程表</h2>
+      {/* 日历组件，用于展示和选择日程 */}
       <Calendar 
-        dateCellRender={dateCellRender} 
-        onSelect={onSelect}
+        dateCellRender={dateCellRender} // 自定义日期单元格渲染函数
+        onSelect={onSelect} // 日期选择事件处理函数
       />
       
+      {/* 添加日程的模态框 */}
       <Modal
         title="添加日程"
         open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        footer={null}
+        onCancel={() => setIsModalVisible(false)} // 关闭模态框
+        footer={null} // 不使用默认的页脚按钮
       >
+        {/* 日程表单 */}
         <Form form={form} layout="vertical" onFinish={handleAddSchedule}>
           <Form.Item
             name="date"
@@ -178,4 +221,5 @@ const Schedule = () => {
   );
 };
 
+// 导出日程表组件
 export default Schedule;
