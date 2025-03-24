@@ -22,7 +22,7 @@ const Register = () => {
   const navigate = useNavigate();
   
   // 部门列表 - 可选的用户部门
-  const departments = ['技术部', '运维部', '人事部', '财务部', '市场部'];
+  const departments = ['程序部', '外联部', '采编部', '美工部', '视频部', '文产部', '运营部', '微博部', '办公室'];
 
   /**
    * 处理表单提交

@@ -260,11 +260,15 @@ const DutyRoster = () => {
             rules={[{ required: true, message: '请选择部门' }]}
           >
             <Select>
-              <Option value="技术部">技术部</Option>
-              <Option value="运维部">运维部</Option>
-              <Option value="人事部">人事部</Option>
-              <Option value="财务部">财务部</Option>
-              <Option value="市场部">市场部</Option>
+              <Option value="程序部">程序部</Option>
+              <Option value="外联部">外联部</Option>
+              <Option value="采编部">采编部</Option>
+              <Option value="美工部">美工部</Option>
+              <Option value="视频部">视频部</Option>
+              <Option value="文产部">文产部</Option>
+              <Option value="运营部">运营部</Option>
+              <Option value="微博部">微博部</Option>
+              <Option value="办公室">办公室</Option>
             </Select>
           </Form.Item>
 
