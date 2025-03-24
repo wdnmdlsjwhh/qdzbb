@@ -15,6 +15,7 @@ import zhCN from 'antd/locale/zh_CN'
 
 // 导入组件
 import Login from './pages/Login'
+import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Schedule from './pages/Schedule'
 import DutyRoster from './pages/DutyRoster'
@@ -74,10 +75,12 @@ function App() {
             </Layout>
           </Layout>
         ) : (
-          /* 未登录状态：只显示登录页面 */
+          /* 未登录状态：显示登录页面和注册页面 */
           <Routes>
             {/* 登录页路由，传入setIsLoggedIn函数用于实现登录功能 */}
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+            {/* 注册页路由 */}
+            <Route path="/register" element={<Register />} />
             {/* 通配符路由，重定向到登录页 */}
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>

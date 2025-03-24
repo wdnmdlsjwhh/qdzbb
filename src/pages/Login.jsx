@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const Login = ({ setIsLoggedIn }) => {
   const [loading, setLoading] = useState(false);
@@ -58,9 +59,16 @@ const Login = ({ setIsLoggedIn }) => {
               className="login-form-button"
               loading={loading}
               size="large"
+              block
             >
               登录
             </Button>
+          </Form.Item>
+          
+          <Form.Item>
+            <div style={{ textAlign: 'center' }}>
+              没有账号？<Link to="/register">立即注册</Link>
+            </div>
           </Form.Item>
         </Form>
       </div>
