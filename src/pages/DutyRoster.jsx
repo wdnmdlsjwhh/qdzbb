@@ -90,7 +90,7 @@ const DutyRoster = () => {
       // 自定义值班类型显示，使用不同颜色的标签区分
       render: (type) => (
         <Tag color={type === 'day' ? 'blue' : 'purple'}>
-          {type === 'day' ? '日班' : '夜班'}
+          {type === 'day' ? '主动值班' : '普通值班'}
         </Tag>
       )
     },
