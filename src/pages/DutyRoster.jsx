@@ -26,20 +26,20 @@ const DutyRoster = () => {
     {
       id: 1,
       user: '张三',
-      department: '技术部',
+      department: '程序部',
       startDate: '2023-09-15',
       endDate: '2023-09-16',
       type: 'day',
-      notes: '日常值班'
+      notes: '主动值班'
     },
     {
       id: 2,
       user: '李四',
-      department: '运维部',
+      department: '外联部',
       startDate: '2023-09-17',
       endDate: '2023-09-18',
       type: 'night',
-      notes: '夜间值班'
+      notes: '普通值班'
     }
   ]);
 
@@ -286,8 +286,8 @@ const DutyRoster = () => {
             rules={[{ required: true, message: '请选择值班类型' }]}
           >
             <Select>
-              <Option value="day">日班</Option>
-              <Option value="night">夜班</Option>
+              <Option value="day">主动值班</Option>
+              <Option value="night">普通值班</Option>
             </Select>
           </Form.Item>
 

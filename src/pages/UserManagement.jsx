@@ -19,14 +19,14 @@ const { Option } = Select;
 const UserManagement = () => {
   // 模拟用户数据 - 在实际应用中，这些数据应该从API获取
   const [users, setUsers] = useState([
-    { id: 1, name: '张三', department: '技术部', role: 'admin', email: 'zhangsan@example.com', phone: '13800000001' },
-    { id: 2, name: '李四', department: '运维部', role: 'user', email: 'lisi@example.com', phone: '13800000002' },
-    { id: 3, name: '王五', department: '人事部', role: 'user', email: 'wangwu@example.com', phone: '13800000003' },
-    { id: 4, name: '赵六', department: '财务部', role: 'user', email: 'zhaoliu@example.com', phone: '13800000004' }
+    { id: 1, name: '张三', department: '程序部', role: 'admin', email: 'zhangsan@example.com', phone: '13800000001' },
+    { id: 2, name: '李四', department: '外联部', role: 'user', email: 'lisi@example.com', phone: '13800000002' },
+    { id: 3, name: '王五', department: '采编部', role: 'user', email: 'wangwu@example.com', phone: '13800000003' },
+    { id: 4, name: '赵六', department: '美工部', role: 'user', email: 'zhaoliu@example.com', phone: '13800000004' }
   ]);
 
   // 部门列表 - 可选的用户部门
-  const departments = ['技术部', '运维部', '人事部', '财务部', '市场部'];
+  const departments = ['程序部', '外联部', '采编部', '美工部', '视频部', '文产部', '运营部', '微博部', '办公室'];
   
   // 角色列表 - 用户可分配的角色
   const roles = ['admin', 'user'];

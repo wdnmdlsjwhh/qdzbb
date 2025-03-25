@@ -70,7 +70,7 @@ function App() {
               </Layout.Content>
               {/* 页脚 */}
               <Layout.Footer style={{ textAlign: 'center' }}>
-                组织管理系统 ©{new Date().getFullYear()} 版权所有
+                湘农青年 ©{new Date().getFullYear()} 版权所有
               </Layout.Footer>
             </Layout>
           </Layout>
